@@ -1,0 +1,13 @@
+<ng-container>
+    @if(errors?.['required']){
+    @if(!formState.valid && (formState.dirty || formState.touched)){
+    <p class="font-normal py-2 text-red-600 italic text-xs">{{errMsgsConfig['required']}}</p>
+    }
+
+    }
+    @if(errors?.['email']){
+    @if(!formState.valid && (formState.dirty || formState.touched)){
+    <p class="font-normal py-2 text-red-600 italic text-xs">{{errMsgsConfig['email']}}</p>
+    }
+    }
+</ng-container>
