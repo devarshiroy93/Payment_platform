@@ -2,7 +2,7 @@ export interface Settings {
     placeholder: string,
     label: string,
     name : string
-    type: 'text' | 'password'
+    type: 'text' | 'password' | 'number'
 }
 
 export const defaultSettings: Settings = {

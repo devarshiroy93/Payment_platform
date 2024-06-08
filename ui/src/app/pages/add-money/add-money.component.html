@@ -1,0 +1,29 @@
+<div class="mt-4">
+    
+    <form [formGroup]="form" (submit)="handleSubmit()">
+        <h4 class="text-3xl text-slate-800 mb-4">Add money</h4>
+        <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1">
+            <div class="m-1">
+                <label class="block text-gray-600 text-sm font-semibold mb-2" for="bank">Select bank</label>
+    
+                <select formControlName="bank" name="bank" id="bank" class="shadow  border rounded w-full py-1.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                    <option value="axis">Axis bank</option>
+                    <option value="hdfc">HDFC bank</option>
+                    <option value="sbi">State bank of India</option>
+                </select>
+            </div>
+
+            <div class="m-1">
+                <app-input [control]="getControl('amount')" [settings]="amountFormFieldSettings"></app-input>
+            </div>
+            <div class="lg:relative">
+                <button class="bg-blue-500 mx-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded lg:absolute lg:bottom-1">
+                    Add
+                  </button>
+            </div>
+        </div>
+        
+        
+
+    </form>
+</div>
