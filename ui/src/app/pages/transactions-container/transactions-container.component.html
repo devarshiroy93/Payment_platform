@@ -1,1 +1,25 @@
-<p>transactions-container works!</p>
+<div>
+    <h4 class="text-3xl mt-2 text-slate-800 mb-4">Transactions</h4>
+    <ul class=" p-2">
+        @for (item of onRampTransactions$|async ; track item) {
+        <li class="mb-2  border-b">
+            <div class="flex justify-between mb-1">
+                <div>
+                    <p class="text-md m-1 text-slate-700">{{item.provider.toUpperCase()}}</p>
+                    <app-chip [type]="item.status.toLowerCase() === 'processing' ? 'pending' : item.status.toLocaleLowerCase() ==='success' ? 'success' : 'error' ">
+                        {{item.status}}
+                    </app-chip>
+
+                </div>
+                <div class="text-right">
+                    <p class="text-xl font-semibold text-green-600 m-1">+{{item.amount}}</p>
+                    <p class="text-sm">{{item.startTime | date: 'short'}}</p>
+                </div>
+
+
+            </div>
+
+        </li>
+        }
+    </ul>
+</div>

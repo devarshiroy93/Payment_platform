@@ -2,7 +2,7 @@
     
     <form [formGroup]="form" (submit)="handleSubmit()">
         <h4 class="text-3xl text-slate-800 mb-4">Add money</h4>
-        <div class="grid lg:grid-cols-3 sm:grid-cols-1 md:grid-cols-1">
+        <div class="grid lg:grid-cols-1 sm:grid-cols-1 md:grid-cols-1">
             <div class="m-1">
                 <label class="block text-gray-600 text-sm font-semibold mb-2" for="bank">Select bank</label>
     
@@ -16,8 +16,8 @@
             <div class="m-1">
                 <app-input [control]="getControl('amount')" [settings]="amountFormFieldSettings"></app-input>
             </div>
-            <div class="lg:relative">
-                <button class="bg-blue-500 mx-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded lg:absolute lg:bottom-1">
+            <div >
+                <button class="bg-slate-700 mx-1 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">
                     Add
                   </button>
             </div>

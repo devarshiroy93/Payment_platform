@@ -1,34 +1,52 @@
-<div class=" flex flex-col items-center justify-center">
-    <app-card>
-        <div>
-            <p>Balance</p>
-            <p class="text-5xl">Rs. 3000</p>
-        </div>
-        <app-sub-nav>
-            <div class="flex sm:justify-between md:justify-between lg:justify-start  mt-4">
-                <span routerLink="transactions" routerLinkActive="bg-blue-700"
-                    class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-                    <a   class="px-1">Transactions</a>
-                </span>
-                <span
-                    class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-                    <a class="px-1">Home</a>
-                </span>
-                <span routerLink="add-money" routerLinkActive="bg-blue-700"
-                    class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-                    <a class="px-1">Add Money</a>
-                </span>
-                <span
-                    class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-                    <a class="px-1">Send money</a>
-                </span>
+<div>
+    <ng-container>
+        <app-alert [settings]="alertSettings$ | async" />
+    </ng-container>
+    <div class=" flex flex-col items-center justify-center">
 
-            </div>
-        </app-sub-nav>
-        <router-outlet></router-outlet>
-    </app-card>
-    
+        <app-card>
+            <!-- <div>{{balance$| async}}</div> -->
+            <ng-container *ngIf="balance$| async as balance">
+                
+                <div *ngIf="!balance.pending">
+                    <p class="text-sm text-slate-800">Balance</p>
+                    <p class="text-5xl">{{'Rs.'+balance.value }}</p>
+                </div>
+                <div *ngIf="balance.pending">
+                    <p>Loading...</p>
+                </div>
+
+            </ng-container>
+
+
+
+            <app-sub-nav>
+                <div class="flex sm:justify-between md:justify-between lg:justify-start  mt-4">
+                    <span routerLink="transactions" routerLinkActive="bg-blue-700"
+                        class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                        <a class="px-1   xs:text-xssm:text-xs md:text-sm">Transactions</a>
+                    </span>
+                    <span
+                        class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                        <a class="px-1xs:text-xs sm:text-xs md:text-sm">Home</a>
+                    </span>
+                    <span routerLink="add-money" routerLinkActive="bg-blue-700"
+                        class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                        <a class="px-1  xs:text-xs sm:text-xs md:text-sm">Add Money</a>
+                    </span>
+                    <span
+                        class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                        <a class="px-1 xs:text-xs sm:text-xs md:text-sm">Send money</a>
+                    </span>
+
+                </div>
+            </app-sub-nav>
+            <router-outlet></router-outlet>
+        </app-card>
+
+    </div>
 </div>
+
 <!-- <div class="mt-4 mx-4 flex flex-col justify-center items-center">
     <app-card>
 
