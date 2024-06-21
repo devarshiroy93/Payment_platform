@@ -3,6 +3,7 @@ import { getOnRampTransactions, startOnRampTransaction } from "../model/onRampTr
 export const onRampTransaction = async (amount: number, provider: string) => {
 
     const onRampTxn = await startOnRampTransaction({ amount, provider });
+
     return onRampTxn
 }
 

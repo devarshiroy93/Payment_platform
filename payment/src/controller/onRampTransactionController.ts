@@ -4,10 +4,11 @@ import { fetchOnRampTransactions, onRampTransaction } from "../services/onRampTr
 export const startOnRampTransactionsController = async (req: Request, res: Response) => {
 
     const { amount, provider } = req.body;
-    const service = await onRampTransaction(amount, provider)
+    const service = await onRampTransaction(amount, provider);
     return res.status(200).send({
         isSuccess: !service.isError,
-        message: service.message
+        message: service.message,
+        data : service.data
     })
 }
 

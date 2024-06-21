@@ -1,11 +1,14 @@
 export interface StartOnRampTxnRequest {
 
-    amount : number,
-    provider : string
+    amount: number,
+    provider: string
 }
 
 export interface StartOnRampTxnResponse {
     isSuccess: boolean,
-    message : string,
-    
+    message: string,
+    data: {
+        txnToken: string
+    } |  null
+
 }

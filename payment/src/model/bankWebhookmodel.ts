@@ -2,16 +2,17 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
 
-export const bankWebHookModel = async (payload: { token: string, userId: number, amount: number }) => {
+export const bankWebHookModel = async (payload: { token: string, amount: number }) => {
 
 
-    const { token, userId, amount } = payload;
+    const { token, amount } = payload;
     try {
         const transaction = await prisma.onRampTransactions.findFirst({
             where: {
                 token
             }
         });
+        const userId = transaction?.userId;
         if (!!transaction && transaction.status === 'Processing') {
             await prisma.$transaction([
                 prisma.balances.updateMany({
@@ -36,17 +37,17 @@ export const bankWebHookModel = async (payload: { token: string, userId: number,
             ]);
         } else {
             return {
-                isError : true ,
-                message : 'Transaction process failed'
+                isError: true,
+                message: 'Transaction process failed'
             }
         }
 
 
         return {
-            isError : false ,
-            message : 'Transaction processed'
+            isError: false,
+            message: 'Transaction processed'
         }
-    } catch (e : unknown) {
+    } catch (e: unknown) {
         console.error(e);
         throw new Error("Webhook failed");
     }

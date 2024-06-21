@@ -13,13 +13,14 @@ exports.bankWebHookModel = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const bankWebHookModel = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    const { token, userId, amount } = payload;
+    const { token, amount } = payload;
     try {
         const transaction = yield prisma.onRampTransactions.findFirst({
             where: {
                 token
             }
         });
+        const userId = transaction === null || transaction === void 0 ? void 0 : transaction.userId;
         if (!!transaction && transaction.status === 'Processing') {
             yield prisma.$transaction([
                 prisma.balances.updateMany({

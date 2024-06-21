@@ -4,8 +4,8 @@ import { webHookServcice } from "../services/webHook"
 
 export const webHookController = async (req: Request, res: Response) => {
 
-    const { token, userId, amount } = req.body
-    const service = await webHookServcice({ amount, token, userId });
+    const { token, amount } = req.body
+    const service = await webHookServcice({ amount, token });
 
     return res.status(200).send({
         isSuccess: !service.isError,

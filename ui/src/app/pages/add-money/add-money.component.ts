@@ -6,6 +6,7 @@ import { AddMoneyService } from './services/add-money.service';
 import { HomeUiService } from '../home-container/services/home-ui.service';
 import { StartOnRampTxnResponse } from './add-money';
 import { Observable, Subscription, of } from 'rxjs';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-add-money',
@@ -14,7 +15,7 @@ import { Observable, Subscription, of } from 'rxjs';
   templateUrl: './add-money.component.html',
   styleUrl: './add-money.component.scss'
 })
-export class AddMoneyComponent implements OnInit , OnDestroy {
+export class AddMoneyComponent implements OnInit, OnDestroy {
 
   /**
    * Component reference for form builder
@@ -78,12 +79,16 @@ export class AddMoneyComponent implements OnInit , OnDestroy {
 
     //test code
     this.addMoneySubscription = this.addMoneyRes$.subscribe((data: StartOnRampTxnResponse | null) => {
-      console.log(data);
+      const txnToken = data?.data?.txnToken;
       this.homeUiService.updateHomeUiAlert({
         message: data?.message || '',
         show: true,
         type: data?.isSuccess ? 'success' : 'error'
-      })
+      });
+
+      if (data?.isSuccess) {
+        setTimeout(()=>{window.location.href = `${environment.mockBankUrl}?token=${txnToken}`}, 1000);
+      }
     })
   }
 

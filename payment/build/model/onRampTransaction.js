@@ -15,7 +15,16 @@ const prisma = new client_1.PrismaClient();
 const startOnRampTransaction = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const { amount, provider } = data;
     //create a dummy bank api server where to get the token from;
-    const token = Math.random().toString();
+    //const token = Math.random().toString();
+    const dummyBankTokenRes = yield fetchOnRampTokenFromMockBank(amount);
+    console.log('dummyBankTokenRes', dummyBankTokenRes);
+    const { success, token } = dummyBankTokenRes;
+    if (!success) {
+        return {
+            isError: true,
+            message: 'OnRampTransaction start failed'
+        };
+    }
     yield prisma.onRampTransactions.create({
         data: {
             amount,
@@ -26,7 +35,10 @@ const startOnRampTransaction = (data) => __awaiter(void 0, void 0, void 0, funct
             userId: 33,
         }
     });
-    return { isError: false, message: 'OnRampTransaction started' };
+    return {
+        isError: false, message: 'OnRampTransaction started',
+        data: { txnToken: dummyBankTokenRes.token }
+    };
 });
 exports.startOnRampTransaction = startOnRampTransaction;
 const getOnRampTransactions = (userId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -42,3 +54,13 @@ const getOnRampTransactions = (userId) => __awaiter(void 0, void 0, void 0, func
     };
 });
 exports.getOnRampTransactions = getOnRampTransactions;
+const fetchOnRampTokenFromMockBank = (amount) => __awaiter(void 0, void 0, void 0, function* () {
+    const res = yield fetch(`${process.env.MOCK_BANK_URL}transaction/token-generate`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ passcode: "bankmocksishere", amount })
+    });
+    return res.json();
+});
