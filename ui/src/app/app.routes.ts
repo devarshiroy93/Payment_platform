@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './auth-guard';
 
 export const routes: Routes = [
     {
@@ -13,7 +14,8 @@ export const routes: Routes = [
             },
             {
                 path: 'transactions',
-                loadComponent: () => import('./pages/transactions-container/transactions-container.component').then(mod => mod.TransactionsContainerComponent)
+                loadComponent: () => import('./pages/transactions-container/transactions-container.component').then(mod => mod.TransactionsContainerComponent),
+                canActivate : [AuthGuard]
             },
             {
                 path: 'advert',
