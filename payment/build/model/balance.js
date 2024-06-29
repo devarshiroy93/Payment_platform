@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.findBalanceByUserId = void 0;
+exports.initialiseBalanceForNewUser = exports.findBalanceByUserId = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const findBalanceByUserId = (userId) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,3 +27,20 @@ const findBalanceByUserId = (userId) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.findBalanceByUserId = findBalanceByUserId;
+const initialiseBalanceForNewUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const res = yield prisma.balances.create({
+            data: {
+                amount: 10,
+                locked: 0,
+                userId,
+            }
+        });
+        return { isError: false, data: res };
+    }
+    catch (err) {
+        console.log(err);
+        return { isError: true, data: null };
+    }
+});
+exports.initialiseBalanceForNewUser = initialiseBalanceForNewUser;

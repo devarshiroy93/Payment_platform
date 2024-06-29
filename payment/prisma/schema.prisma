@@ -15,19 +15,29 @@ datasource db {
 
 model Balances {
   id     String @id @default(auto()) @map("_id") @db.ObjectId
-  userId Int @unique
+  userId Int    @unique
   amount Int
   locked Int
 }
 
 model OnRampTransactions {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
   status    OnRampStatus
   token     String       @unique
   provider  String
   amount    Int
   startTime DateTime
   userId    Int
+}
+
+model p2pTransfers {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  fromUserId   Int
+  fromUserName String
+  amount       Int
+  timeStamp    DateTime
+  toUserId     Int
+  toUserName   String
 }
 
 enum OnRampStatus {

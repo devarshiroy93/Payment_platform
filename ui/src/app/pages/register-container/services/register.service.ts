@@ -23,11 +23,11 @@ export class RegisterService {
   register(payload: RegisterApiRequest): Observable<RegisterApiFormattedUiResponse> {
 
     return this.httpClient$.post<RegisterApiFormattedUiResponse>(`${environment.platformAuthUrl}/api/v1/user/register`, payload)
-      .pipe((map((data: RegisterApiResponse) => {
-        return { isSuccess: true, message: data.body?.message }
-      }), catchError(() => {
-        return of({ isSuccess: false, message: 'Failed' })
-      })))
+      .pipe(map((res : RegisterApiResponse)=>{
+        return {id : res.body?.id || 0  ,isSuccess : true , message : res.body?.message || 'Registration successful'}
+      }),catchError(res=>{
+        return of({id : 0 , isSuccess: false , message : 'User registration failed'})
+      }))
 
   }
 }

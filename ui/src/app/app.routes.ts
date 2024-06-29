@@ -15,15 +15,21 @@ export const routes: Routes = [
             {
                 path: 'transactions',
                 loadComponent: () => import('./pages/transactions-container/transactions-container.component').then(mod => mod.TransactionsContainerComponent),
-                canActivate : [AuthGuard]
+                canActivate: [AuthGuard]
             },
             {
                 path: 'advert',
-                loadComponent: () => import('./pages/advertisement/advertisement.component').then(m => m.AdvertisementComponent)
+                loadComponent: () => import('./pages/advertisement/advertisement.component').then(m => m.AdvertisementComponent),
+                canActivate: [AuthGuard]
             },
             {
                 path: 'add-money',
-                loadComponent: () => import('./pages/add-money/add-money.component').then(m => m.AddMoneyComponent)
+                loadComponent: () => import('./pages/add-money/add-money.component').then(m => m.AddMoneyComponent),
+                canActivate: [AuthGuard]
+            }, {
+                path: 'send-money',
+                loadComponent: () => import('./pages/send-money/send-money.component').then(c => c.SendMoneyComponent),
+                canActivate: [AuthGuard]
             }
         ]
     },

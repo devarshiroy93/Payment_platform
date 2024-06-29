@@ -6,9 +6,10 @@ import { InputComponent } from '../../components/input/input.component';
 import { AlertComponent } from '../../components/alert/alert.component';
 import { RegisterService } from './services/register.service';
 import { RegisterApiFormattedUiResponse, RegisterApiResponse } from './register-container';
-import { Observable, map, of } from 'rxjs';
+import { Observable, map, of, switchMap, tap } from 'rxjs';
 import { AlertSettings, DefaultAlertSettings } from '../../components/alert/alert';
 import { CommonModule } from '@angular/common';
+import { HomeService } from '../home-container/services/home.service';
 
 
 const IMPORTS = [InputComponent, ReactiveFormsModule, CommonModule, ErrorMsgComponent, AlertComponent]
@@ -26,6 +27,11 @@ export class RegisterContainerComponent {
    * Component reference to register service
    */
   private registerService: RegisterService = inject(RegisterService);
+
+  /**
+  * Component reference to homeService service
+  */
+  private homeService: HomeService = inject(HomeService)
 
 
   /**
@@ -106,12 +112,22 @@ export class RegisterContainerComponent {
    */
   onSubmit() {
     console.log(this.form.value);
-    this.registerApiResponse$ = this.registerService.register(this.form.value);
+    this.registerApiResponse$ = this.registerService.register(this.form.value).pipe(switchMap((res) => {
+      console.log(res.id);
+      return this.homeService.initBalanceForNewUser(res.id).pipe(map(() => {
+        return {
+          isSuccess: true,
+          message: 'User registration successful',
+          id: 0
+        }
+      }))
+    }));
     this.alertSettings$ = this.registerApiResponse$.pipe(map((data) => {
+      console.log(data);
       return {
         show: true,
         type: data.isSuccess ? 'success' : 'error',
-        message : data.message
+        message: data.message
       }
     }))
   }

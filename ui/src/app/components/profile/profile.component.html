@@ -1,0 +1,25 @@
+<div class="flex mb-4">
+
+    <ng-container *ngIf="profileDetails$| async as p">
+        <ng-container *ngIf="!!p.id">
+            <div class=" rounded-full p-2 w-10 h-10 text-white bg-slate-700 text-center">
+                D
+            </div>
+            <div class="flex flex-col  ml-1">
+                <div class="text-slate-700 text-lg">
+                    Hey, {{p.firstName}}
+                </div>
+                <div class="text-slate-500 text-xs">
+                    Welcome back
+                </div>
+
+            </div>
+        </ng-container>
+        <div *ngIf="!p.id">
+            <app-spinner></app-spinner>
+        </div>
+
+    </ng-container>
+
+
+</div>

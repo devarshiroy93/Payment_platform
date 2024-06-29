@@ -1,8 +1,8 @@
 import { getOnRampTransactions, startOnRampTransaction } from "../model/onRampTransaction";
 
-export const onRampTransaction = async (amount: number, provider: string) => {
+export const onRampTransaction = async (amount: number, provider: string , userId : number) => {
 
-    const onRampTxn = await startOnRampTransaction({ amount, provider });
+    const onRampTxn = await startOnRampTransaction({ amount, provider , userId });
 
     return onRampTxn
 }

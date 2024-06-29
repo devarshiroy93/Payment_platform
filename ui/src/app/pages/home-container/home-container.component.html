@@ -5,11 +5,14 @@
     <div class=" flex flex-col items-center justify-center">
 
         <app-card>
+            <section>
+                <app-profile></app-profile>
+            </section>
             <!-- <div>{{balance$| async}}</div> -->
             <ng-container *ngIf="balance$| async as balance">
                 
                 <div *ngIf="!balance.pending">
-                    <p class="text-sm text-slate-800">Balance</p>
+                    <p class="text-sm text-slate-700">Your balance</p>
                     <p class="text-5xl">{{'Rs.'+balance.value }}</p>
                 </div>
                 <div *ngIf="balance.pending">
@@ -34,7 +37,7 @@
                         class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
                         <a class="px-1  xs:text-xs sm:text-xs md:text-sm">Add Money</a>
                     </span>
-                    <span
+                    <span routerLink="send-money" routerLinkActive="bg-blue-700"
                         class="inline-block cursor-pointer bg-slate-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
                         <a class="px-1 xs:text-xs sm:text-xs md:text-sm">Send money</a>
                     </span>

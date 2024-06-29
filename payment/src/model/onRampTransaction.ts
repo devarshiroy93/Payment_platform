@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient();
 
-export const startOnRampTransaction = async (data: { amount: number, provider: string }) => {
+export const startOnRampTransaction = async (data: { amount: number, provider: string, userId: number }) => {
 
-    const { amount, provider } = data;
+    const { amount, provider, userId } = data;
     //create a dummy bank api server where to get the token from;
     //const token = Math.random().toString();
     const dummyBankTokenRes = await fetchOnRampTokenFromMockBank(amount);
@@ -22,7 +22,7 @@ export const startOnRampTransaction = async (data: { amount: number, provider: s
             startTime: new Date(),
             status: 'Processing',
             token,
-            userId: 33,
+            userId: userId,
         }
     });
     return {

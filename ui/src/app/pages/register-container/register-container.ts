@@ -6,6 +6,6 @@ export interface RegisterApiRequest {
     lastName: string
 }
 
-export type RegisterApiFormattedUiResponse = { isSuccess: boolean, message: string }
+export type RegisterApiFormattedUiResponse = { isSuccess: boolean, message: string  , id : number}
 
-export type RegisterApiResponse = { isSuccess: boolean, body?: { message: string } }
+export type RegisterApiResponse = { isSuccess: boolean, body?: { message: string  , id : number} }

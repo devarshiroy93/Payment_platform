@@ -9,16 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchOnRampTransactions = exports.onRampTransaction = void 0;
-const onRampTransaction_1 = require("../model/onRampTransaction");
-const onRampTransaction = (amount, provider, userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const onRampTxn = yield (0, onRampTransaction_1.startOnRampTransaction)({ amount, provider, userId });
-    return onRampTxn;
+exports.initialiseBalanceForNewUser = void 0;
+const initialiseBalanceForNewUser_1 = require("../services/initialiseBalanceForNewUser");
+const initialiseBalanceForNewUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const service = yield (0, initialiseBalanceForNewUser_1.initialiseBalanceForNewUser)(Number(req.body.userId));
+    return res.status(200).send({
+        isSuccess: true,
+        data: service.data
+    });
 });
-exports.onRampTransaction = onRampTransaction;
-const fetchOnRampTransactions = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('userID', userId);
-    const transactions = yield (0, onRampTransaction_1.getOnRampTransactions)(userId);
-    return transactions;
-});
-exports.fetchOnRampTransactions = fetchOnRampTransactions;
+exports.initialiseBalanceForNewUser = initialiseBalanceForNewUser;

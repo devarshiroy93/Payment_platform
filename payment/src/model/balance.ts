@@ -22,5 +22,23 @@ export const findBalanceByUserId = async (userId: number): Promise<
 
 }
 
+export const initialiseBalanceForNewUser = async (userId : number)=>{
+    try {
+        const res = await prisma.balances.create({
+            data : {
+                amount : 10,
+                locked : 0,
+                userId ,
+            }
+        })
+       
+        return { isError: false, data: res };
+    } catch (err) {
+        console.log(err);
+        return { isError: true, data: null }
+    }
+
+}
+
 
 

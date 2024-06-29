@@ -13,7 +13,8 @@ exports.getOnRampTransactionsController = exports.startOnRampTransactionsControl
 const onRampTransaction_1 = require("../services/onRampTransaction");
 const startOnRampTransactionsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { amount, provider } = req.body;
-    const service = yield (0, onRampTransaction_1.onRampTransaction)(amount, provider);
+    const userId = req.user.id;
+    const service = yield (0, onRampTransaction_1.onRampTransaction)(amount, provider, userId);
     return res.status(200).send({
         isSuccess: !service.isError,
         message: service.message,
@@ -22,8 +23,8 @@ const startOnRampTransactionsController = (req, res) => __awaiter(void 0, void 0
 });
 exports.startOnRampTransactionsController = startOnRampTransactionsController;
 const getOnRampTransactionsController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    //get the userId from token
-    const userId = 33;
+    //getting the userId from token
+    const userId = req.user.id;
     const service = yield (0, onRampTransaction_1.fetchOnRampTransactions)(userId);
     return res.status(200).send({
         isSuccess: !service.isError,

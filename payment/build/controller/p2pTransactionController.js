@@ -9,16 +9,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.fetchOnRampTransactions = exports.onRampTransaction = void 0;
-const onRampTransaction_1 = require("../model/onRampTransaction");
-const onRampTransaction = (amount, provider, userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const onRampTxn = yield (0, onRampTransaction_1.startOnRampTransaction)({ amount, provider, userId });
-    return onRampTxn;
+exports.p2pTransactionController = void 0;
+const p2pTransactonservice_1 = require("../services/p2pTransactonservice");
+const p2pTransactionController = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { amount, userId } = req.body;
+    const authToken = req.headers['authorization'] || '';
+    const user = req.user;
+    const service = yield (0, p2pTransactonservice_1.p2pTransaction)({ amount, fromUser: user, toUserId: userId, authToken });
+    return res.status(200).send({
+        isSuccess: !service.isError,
+        message: service.message,
+        data: service.data
+    });
 });
-exports.onRampTransaction = onRampTransaction;
-const fetchOnRampTransactions = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('userID', userId);
-    const transactions = yield (0, onRampTransaction_1.getOnRampTransactions)(userId);
-    return transactions;
-});
-exports.fetchOnRampTransactions = fetchOnRampTransactions;
+exports.p2pTransactionController = p2pTransactionController;

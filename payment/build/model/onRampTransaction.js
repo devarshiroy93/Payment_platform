@@ -13,7 +13,7 @@ exports.getOnRampTransactions = exports.startOnRampTransaction = void 0;
 const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 const startOnRampTransaction = (data) => __awaiter(void 0, void 0, void 0, function* () {
-    const { amount, provider } = data;
+    const { amount, provider, userId } = data;
     //create a dummy bank api server where to get the token from;
     //const token = Math.random().toString();
     const dummyBankTokenRes = yield fetchOnRampTokenFromMockBank(amount);
@@ -32,7 +32,7 @@ const startOnRampTransaction = (data) => __awaiter(void 0, void 0, void 0, funct
             startTime: new Date(),
             status: 'Processing',
             token,
-            userId: 33,
+            userId: userId,
         }
     });
     return {
